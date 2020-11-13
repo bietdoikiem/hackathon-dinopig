@@ -45,9 +45,24 @@ router.post("/", async (req, res) => {
 	});
 });
 
-router.post('/login', async (req, res) => {
-    await User.findOne({username: req.body.username}, (err, user) => {
+router.get("/:username", async(req, res) => {
+	await User.findOne({username: req.params.username}, async (err, user) => {
+		if(err) handleError(err);
+		await user;
+		if(user) {
+			res.send(user)
+		} else {
+			res.send({
+				msg: "User not found"
+			})
+		}
+	})
+})
+
+router.post('/auth/login', async (req, res) => {
+    await User.findOne({username: req.body.username}, async (err, user) => {
 		if (err) handleError(err);
+		await user;
         if(user) {
             if(req.body.password = user.password) {
                 res.json({
@@ -58,9 +73,14 @@ router.post('/login', async (req, res) => {
 					'msg': `failted to authenticate`
 				})
 			}
-        }
+        } else {
+			res.json({
+				'msg': 'wrong username or password'
+			})
+		}
     })
 })
+
 
 function handleError(err) {
 	console.log(err);
