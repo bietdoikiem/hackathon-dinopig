@@ -1,0 +1,159 @@
+:root {
+    --white-color: #fff;
+    --dark-blue: #254255;
+}  
+
+.nav-container {
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.25rem;
+    background-color: #e8e8e8;
+    overflow: hidden;
+    top: 0;
+    z-index: 100;
+    position: relative;
+}
+
+
+/* Flex-box container */
+.flexbox { 
+    max-width: 1280px;
+    margin-right: auto;
+	margin-left: auto;
+    align-items: center;
+    margin: 0 auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    
+
+}
+
+@media (max-width: 1024px) {
+    .flexbox {
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+    .flexbox-left {
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+    .flexbox-right {
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .navtags-logo {
+        margin-top: 10px;
+    }
+
+    .topNav {
+        flex: 1 0 100%;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        margin-left: 0rem !important;
+        text-align: center;
+    }
+    .topNav li {
+        margin: 5px 0 !important;
+    }
+}
+
+.flexbox-left {
+    display: flex;
+    align-items: center;
+
+}
+
+.flexbox-right {
+    display: flex;
+    align-items: center;
+}
+
+.flexbox-right .navtags {
+    margin-right: 2rem;
+    color: #222831;
+    text-decoration: none;
+}
+
+.topNav {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    margin-left: 3rem;
+}
+
+li .navtags {
+    color: #222831;
+    position: relative;
+    text-decoration: none;
+    margin: 0.75rem;
+}
+
+
+
+.navbtn {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    margin: 1.5rem;
+    background-color: #f05454;
+    box-sizing: border-box;
+    padding: 16px 36px;
+    border-radius: 15px;
+}
+
+.navbtn:hover {
+    background-color: #2974a6;
+}
+
+.selected-btn {
+
+}
+
+.navbtn:focus {
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
+}
+
+
+/* Css for navtags on hover */
+.navtags:hover::before {
+    content: "";
+    position: absolute;
+    height: 3px;
+    right: 0px;
+    bottom: -3px;
+    left: 0px;
+    background-color: var(--white-color);
+}
+
+
+/* Css for logo Tendermate */
+.navtags-logo {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+}
+
+.selected::before {
+    content: "";
+    position: absolute;
+    height: 3px;
+    right: 0px;
+    bottom: -3px;
+    left: 0px;
+    background-color: var(--white-color);
+}
+
+@keyframes line {
+    from {}
+}
