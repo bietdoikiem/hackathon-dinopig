@@ -25,8 +25,8 @@ router.get("/about", (req, res) => {
 	});
 });
 
-router.post("/", (req, res) => {
-	User.findOne({ username: req.body.username }, async (err, user) => {
+router.post("/", async (req, res) => {
+	await User.findOne({ username: req.body.username }, async (err, user) => {
 		if (!user) {
 			await User.create({
 				username: req.body.username,
@@ -45,14 +45,19 @@ router.post("/", (req, res) => {
 	});
 });
 
-router.post('/login', (req, res) => {
-    User.findOne({usernanme: req.body.username}, (err, user) => {
+router.post('/login', async (req, res) => {
+    await User.findOne({username: req.body.username}, (err, user) => {
+		if (err) handleError(err);
         if(user) {
             if(req.body.password = user.password) {
                 res.json({
-                    'result': `authenticated as ${user.role}`,
+                    'msg': `authenticated as ${user.role}`,
                 })
-            }
+            } else {
+				res.json({
+					'msg': `failted to authenticate`
+				})
+			}
         }
     })
 })
