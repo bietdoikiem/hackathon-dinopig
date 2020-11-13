@@ -8,7 +8,7 @@
     font-style: normal;
     font-weight: bold;
     font-size: 1.25rem;
-    background-color: #e8e8e8;
+    background-color: #d2f6c5;
     overflow: hidden;
     top: 0;
     z-index: 100;
@@ -111,19 +111,6 @@ li .navtags {
     border-radius: 15px;
 }
 
-.navbtn:hover {
-    background-color: #2974a6;
-}
-
-.selected-btn {
-
-}
-
-.navbtn:focus {
-		outline: none;
-		box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
-}
-
 
 /* Css for navtags on hover */
 .navtags:hover::before {
@@ -152,8 +139,4 @@ li .navtags {
     bottom: -3px;
     left: 0px;
     background-color: var(--white-color);
-}
-
-@keyframes line {
-    from {}
 }

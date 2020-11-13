@@ -5,6 +5,7 @@ import './components/Form.css'
 import NavigationBar from './components/navigation/NavigationBar.js';
 import LoginForm from './components/login/LoginForm';
 import SignUpForm from './components/signup/SignUpForm';
+import StudentHome from './pages/StudentHome';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 					<Switch>
             <Route path="/signin" component={LoginForm}/>
             <Route path='/signup' component={SignUpForm}/>
+            <Route path='/user' component={StudentHome}/>
 					</Switch>
 				</div>
 			</div>
