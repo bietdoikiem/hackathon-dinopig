@@ -1,6 +1,8 @@
 import React from 'react'
 import './Course.css'
 import AssignmentDiv from '../../components/assignment/AssignmentDiv'
+import Material from '../../components/material/Material'
+import LineChart from '../../components/visualization/Visualization'
 
 export default class Course extends React.Component {
 
@@ -23,7 +25,16 @@ export default class Course extends React.Component {
                 }
             ],
             materials : [
-                {}
+                {
+                    'id': 1,
+                    'url': 'https://www.w3schools.com/tags/att_input_type_radio.asp',
+                    'topic': 'input type'
+                }, 
+                {
+                    'id': 2,
+                    'url': 'https://www.w3schools.com/cssref/css3_pr_mediaquery.asp',
+                    'topic': 'media query'
+                }
             ]
         }
     }
@@ -53,18 +64,24 @@ export default class Course extends React.Component {
                                 </div>
                                 <div id="visualize-section">
                                     <div>
-
+                                        <div className="section-header">
+                                            <i class="fas fa-2x fa-poll"></i>
+                                            <h3>Progress</h3>
+                                        </div>
+                                        <LineChart/>
                                     </div>
                                 </div>
                             </div>
                             <div id="right-section" className="col-lg-4 col-12">
-                                    <div>
+                                    <div id="material-section">
                                         <div className="section-header">
                                             <i class="far fa-2x fa-calendar-check"></i>
                                             <h3>Materials</h3>
                                         </div>
                                         <div className="section-body">
-                                            
+                                            {this.state.materials.map(m => (
+                                                <Material data={m}/>
+                                            ))}
                                         </div>
                                     </div>
                             </div>
