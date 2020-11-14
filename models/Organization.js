@@ -5,10 +5,13 @@ const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());
 
-mongoose.connect(
-	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
-	{ useNewUrlParser: true, useUnifiedTopology: true }
-);
+// mongoose.connect(
+// 	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
+// 	{ useNewUrlParser: true, useUnifiedTopology: true }
+// )
+// .then(res => console.log("Connected to DB"))
+// .catch(err => console.log(err));
+
 
 var Organization = require("../schemas/OrganizationSchema");
 var OrganizationSchema = require("../schemas/OrganizationSchema").schema;
@@ -26,12 +29,8 @@ router.get("/about", (req, res) => {
 	});
 });
 
-router.post("/", (req, res) => {
-	Organization.find({}, (err, orgs) => {
-		Organization.findOne({ id: req.body.id }, async (err, org) => {
-			if (org) handleEror(err);
+router.post("/", async (req, res) => {
 			await Organization.create({
-				id: handleID(orgs),
 				name: req.body.name,
 				contact_phone: req.body.contact_phone,
 				address: req.body.address,
@@ -39,8 +38,6 @@ router.post("/", (req, res) => {
 			res.send({
 				msg: "Organization created successfully",
 			});
-		});
-	});
 });
 
 router.delete("/", async (req, res) => {

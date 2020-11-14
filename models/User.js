@@ -5,10 +5,13 @@ const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());
 
-mongoose.connect(
-	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
-	{ useNewUrlParser: true, useUnifiedTopology: true }
-);
+// mongoose.connect(
+// 	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
+// 	{ useNewUrlParser: true, useUnifiedTopology: true }
+// )
+// .then(res => console.log("Connected to DB"))
+// .catch(err => console.log(err));
+
 
 var User = require("../schemas/UserSchema");
 var UserSchema = require("../schemas/UserSchema").schema;

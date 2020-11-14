@@ -3,6 +3,7 @@ const {Schema} = mongoose;
 
 const OrganizationSchema = require('../schemas/OrganizationSchema').schema;
 
+
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -16,6 +17,9 @@ const UserSchema = new Schema({
     role: {
         type: String,
         required: true
+    },
+    subjectIds: {
+        type: [String]
     },
     organization: {
         type: OrganizationSchema,

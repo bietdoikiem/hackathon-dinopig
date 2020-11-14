@@ -6,10 +6,28 @@ const jwt = require('jsonwebtoken');
 
 var users = require('./models/User');
 var organizations = require('./models/Organization');
-
+var subjects = require("./models/Subject");
+var assignments = require("./models/Assignment");
+var quizzes = require("./models/Quiz");
+var sampleQuizzes = require("./models/SampleQuiz");
+var topics = require("./models/Topic");
+var materials = require("./models/Material");
+var sampleAssignments = require("./models/SampleAssignment");
 const app = express();
 
-mongoose.connect(`mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority`, { useUnifiedTopology: true, useNewUrlParser: true });
+
+
+//Connect to cloud database
+mongoose.Promise = global.Promise;
+
+mongoose.connect(
+	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
+	{ useNewUrlParser: true, useUnifiedTopology: true}
+)
+.then(res => console.log("Connected to DB"))
+.catch(err => console.log(err));
+
+
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -29,7 +47,14 @@ app.get("/", (req, res) => {
 })
 
 app.use('/users', users);
+app.use("/subjects", subjects)
 app.use('/organizations', organizations);
+app.use('/assignments', assignments);
+app.use('/quizzes', quizzes);
+app.use('/samplequizzes', sampleQuizzes);
+app.use('/topics', topics);
+app.use('/materials', materials);
+app.use('/sampleassignments', sampleAssignments)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
