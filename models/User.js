@@ -82,7 +82,7 @@ router.post('/auth/login', async (req, res) => {
 })
 
 router.delete('/:username', async (req, res) => {
-	User.deleteOne({username: req.params.username}, async (err, result) => {
+	await User.deleteOne({username: req.params.username}, async (err, result) => {
 		await result;
 		res.send(result);
 	})
