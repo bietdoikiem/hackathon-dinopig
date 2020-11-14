@@ -1,12 +1,8 @@
 import React from 'react'
-import CourseCard from '../components/student/CourseCard'
+import Home from './studentView/Home'
 import styled from 'styled-components'
 
-const CardContainer = styled.div`
-    width: 27%;
-`
-
-export default class StudentHome extends React.Component {
+export default class Student extends React.Component {
 
     constructor() {
         super()
@@ -18,20 +14,7 @@ export default class StudentHome extends React.Component {
     render() {
         return (
             <div>
-                <div class="row no-gutters" style={{padding:'40px'}}>
-                    <CardContainer className="col-3 no-gutters">
-                        <CourseCard></CourseCard>
-                    </CardContainer>
-                    <CardContainer className="col-3 no-gutters">
-                        <CourseCard></CourseCard>
-                    </CardContainer>
-                    <CardContainer className="col-3 no-gutters">
-                        <CourseCard></CourseCard>
-                    </CardContainer>
-                    <CardContainer className="col-3 no-gutters">
-                        <CourseCard></CourseCard>
-                    </CardContainer>
-                </div>
+                <Home/>
             </div>
         )
     }
