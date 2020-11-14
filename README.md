@@ -8,3 +8,11 @@
     <li> Use "npm run server" to run only back-end</li>
     <li>Use "npm run client" to run only front-end</li>
 </ul>
+<h3>User Methods</h3>
+    <ul>
+        <li>GET "/users": return all users</li>
+        <li>GET "/users/about": About User's API</li>
+        <li>POST "/users": register user including: username, name, email, password, phone_number, role</li>
+        <li>POST "/users/auth/login": Request username and password</li>
+        <li>DELETE "/users/:username": Delete user by username</li>
+    </ul>

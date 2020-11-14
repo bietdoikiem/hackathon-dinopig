@@ -1,13 +1,44 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
+var users = require('./models/User');
+var organizations = require('./models/Organization');
+var subjects = require("./models/Subject");
+var assignments = require("./models/Assignment");
+var quizzes = require("./models/Quiz");
+var sampleQuizzes = require("./models/SampleQuiz");
+var topics = require("./models/Topic");
+var materials = require("./models/Material");
+var sampleAssignments = require("./models/SampleAssignment");
 const app = express();
 
+
+
+//Connect to cloud database
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/mydb`, { useUnifiedTopology: true, useNewUrlParser: true });
+
+mongoose.connect(
+	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
+	{ useNewUrlParser: true, useUnifiedTopology: true}
+)
+.then(res => console.log("Connected to DB"))
+.catch(err => console.log(err));
+
+
 
 app.use(bodyParser.json());
+app.use(cors());
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  const path = require('path');
+  app.get('*', (req,res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 app.get("/", (req, res) => {
     res.json({
@@ -15,7 +46,18 @@ app.get("/", (req, res) => {
     })
 })
 
+app.use('/users', users);
+app.use("/subjects", subjects)
+app.use('/organizations', organizations);
+app.use('/assignments', assignments);
+app.use('/quizzes', quizzes);
+app.use('/samplequizzes', sampleQuizzes);
+app.use('/topics', topics);
+app.use('/materials', materials);
+app.use('/sampleassignments', sampleAssignments)
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`app running on port ${PORT}`)
 });
+
