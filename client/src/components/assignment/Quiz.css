@@ -1,0 +1,26 @@
+.question-box p {
+    color: black;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.answer-btn {
+    border-color: #99f3bd;
+    background-color: #fff;
+    padding: 7px 40px;
+    margin: 20px;
+    color: #99f3bd;
+    border-style: solid;
+    outline: none !important;
+    font-weight: 600;
+}
+
+.choosed {
+    background-color: #28df99;
+    color: #fff;
+}
+
+.answer-btn:hover {
+    color: #fff;
+    background-color: #99f3bd;
+}

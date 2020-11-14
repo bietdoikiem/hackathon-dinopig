@@ -1,0 +1,78 @@
+.assignment-container {
+}
+
+.assignment {
+	background-color: #f6f7d4;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 20px;
+	width: 100%;
+}
+
+.assignment-preview h6 {
+	opacity: 0.8;
+    margin: 0;
+    color: #fff;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.assignment h2 {
+    letter-spacing: 0.5px;
+    font-size: 1.5rem;
+}
+
+.assignment-preview {
+    text-align: center;
+	background-color: #99f3bd;
+    color: #fff;
+    width: 45%;
+    padding: 4rem;
+    align-items: stretch;
+}
+
+.assignment-info {
+    text-align: left;
+	padding: 25px;
+	position: relative;
+	width: 55%;
+}
+
+.assignment-info h6 {
+    margin-top: 15px;
+}
+
+
+.btn {
+	background-color: #28df99;
+	border: 0;
+	border-radius: 50px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 1em;
+	padding: 7px 30px;
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+    letter-spacing: 1px;
+    width: 15em;
+}
+
+@media screen and (max-width: 900px) {
+    .assignment {
+        flex-direction: column;
+    }
+
+    .assignment-preview {
+        width: 100%;
+    }
+
+    .assignment-info {
+        width: 100%;
+    }
+
+    .btn {
+        width: 13em;
+    }
+}

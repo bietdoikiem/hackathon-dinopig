@@ -1,0 +1,13 @@
+.radio-btn-group {
+    display: flex;
+}
+
+.radio-btn {
+    display: flex;
+    margin: 0 30px;
+}
+
+.check-box-custom {
+    position: relative;
+    margin-top: 10px;
+}

@@ -1,0 +1,81 @@
+.card {
+  background: #FFF;
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+}
+
+.card-img-top {
+  height: 220px
+}
+
+.card-top-text {
+  color: #FFF;
+  font-size: 1.5em;
+  position: absolute;
+  top:0;
+  padding: 40px;
+}
+
+.card-text, span {
+  color: #779a94;
+}
+
+.card-block {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 10px 20px;
+}
+
+.card-block .card-course-info {
+    float: left;
+}
+
+.card-block .card-course-info {
+  display: block;
+  height: auto;
+}
+
+
+.card-block.card-bottom {
+    height: auto;
+    padding-bottom: 20px;
+}
+
+
+
+.card-block .btn {
+  display: block;
+  width: 100%;
+  height: 50px;
+  border-color: #affc92;
+  border-radius: 0px;
+  color: #affc92;
+  text-align: center;
+  font-size: 20px;
+}
+
+.card-block .btn:hover {
+    background-color: #affc92;
+    color: #FFF;
+}
+
+
+
+#course-name {
+    font-size: 1.20rem;
+    font-weight: 600;
+}
+
+.course-btn {
+  color: #affc92
+}
+
+.course-btn:link {
+  text-decoration: none;
+  color: #affc92
+}
+
+.course-btn:hover {
+  color: #fff;
+}
