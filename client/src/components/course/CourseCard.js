@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import './CourseCard.css'
 
 export default class CourseCard extends React.Component {
@@ -7,7 +8,7 @@ export default class CourseCard extends React.Component {
 
     render() {
         return (
-            <div class="">
+            <div class="row no-gutters">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <img class="card-img-top" src="https://images.unsplash.com/photo-1445452916036-9022dfd33aa8?auto=format&fit=crop&w=1053&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D" />
@@ -37,7 +38,7 @@ export default class CourseCard extends React.Component {
                             </div>
                         </div>
                         <div class="card-block card-bottom">
-                            <button className='btn'><a>View</a></button>
+                            <NavLink className="course-btn btn" to='/course'>View</NavLink>
                         </div>
                     </div>
                 </div>

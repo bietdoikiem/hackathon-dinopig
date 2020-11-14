@@ -1,0 +1,57 @@
+ @keyframes ripple {
+	 0% {
+		 box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.0);
+	}
+	 50% {
+		 box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+	}
+	 100% {
+		 box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0);
+	}
+}
+ .radio-btn {
+	 margin: 16px 0;
+}
+ .radio-btn input[type="radio"] {
+	 display: none;
+}
+ .radio-btn input[type="radio"]:checked + label:before {
+	 border-color: #93fc6d;
+	 animation: ripple 0.2s linear forwards;
+}
+ .radio-btn input[type="radio"]:checked + label:after {
+	 transform: scale(1);
+}
+ .radio-btn label {
+	 display: inline-block;
+	 height: 20px;
+	 position: relative;
+	 padding: 0 30px;
+	 margin-bottom: 0;
+	 cursor: pointer;
+	 vertical-align: bottom;
+	 font-size: 14px;
+}
+ .radio-btn label:before, .radio-btn label:after {
+	 position: absolute;
+	 content: '';
+	 border-radius: 50%;
+	 transition: all 0.3s ease;
+	 transition-property: transform, border-color;
+}
+ .radio-btn label:before {
+	 left: 0;
+	 top: 0;
+	 width: 20px;
+	 height: 20px;
+	 border: 2px solid rgba(0, 0, 0, 0.54);
+}
+ .radio-btn label:after {
+	 top: 5px;
+	 left: 5px;
+	 width: 10px;
+	 height: 10px;
+	 transform: scale(0);
+	 background: #93fc6d;
+}
+ 

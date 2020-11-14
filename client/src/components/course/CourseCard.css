@@ -66,3 +66,16 @@
     font-size: 1.20rem;
     font-weight: 600;
 }
+
+.course-btn {
+  color: #affc92
+}
+
+.course-btn:link {
+  text-decoration: none;
+  color: #affc92
+}
+
+.course-btn:hover {
+  color: #fff;
+}
