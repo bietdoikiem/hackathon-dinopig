@@ -1,10 +1,22 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Quicksand;
+}
+
+#root {
+  height: 100%;
+}
+
 .App {
   text-align: center;
+  height: 100%;
 }
 
 .App-logo {
-  width: 48%;
-  height: auto;
+  width: 55%;
+  height: 100%;
   pointer-events: none;
 }
 
@@ -24,11 +36,18 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
+
+.box .row.header {
+  flex: 0 1 auto;
+}
+
+.box .row.content {
+  height: 80%;
+}
+
+
