@@ -62,6 +62,30 @@ router.get("/:username", async(req, res) => {
 	})
 })
 
+router.put("/add/subject", async(req, res) => {
+	await User.findOne({ _id: req.body.id }, async (err, user) => {
+		if (err) handleError(err);
+		try {
+			var user_subIds = user.subjectIds;
+			await user_subjectIds;
+			user_subIds.push(req.body.subId);
+			if (user) {
+				User.findOneAndUpdate(
+					{ username: req.body.username },
+					{
+						subjectIds: subject_subIds,
+					}, (err, result) => {
+						if(err) handleError(err);
+						res.send(result);
+					}
+				);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	});
+})
+
 router.post('/auth/login', async (req, res) => {
     await User.findOne({username: req.body.username}, async (err, user) => {
 		if (err) handleError(err);
