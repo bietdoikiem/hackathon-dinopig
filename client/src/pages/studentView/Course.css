@@ -12,6 +12,19 @@
     text-align: left;
 }
 
+.course-btn {
+    display: block;
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    border-color: #affc92;
+    border-radius: 0px;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    background-color: #affc92;
+}
+
 .header-item {
     margin-left: 20px;
     font-size: 2em;

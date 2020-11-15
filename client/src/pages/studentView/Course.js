@@ -3,76 +3,74 @@ import './Course.css'
 import AssignmentDiv from '../../components/assignment/AssignmentDiv'
 import Material from '../../components/material/Material'
 import LineChart from '../../components/visualization/Visualization'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 export default class Course extends React.Component {
 
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            assignments :  [
-                {
-                    id: '1',
-                    name: 'assignment 1',
-                    duration: 5000,
-                    due: '20/02/2020',
-                }, 
-                {
-                    id: '2',
-                    name: 'assignment 2',
-                    duration: 5000,
-                    due: '21/02/2020',
-                }
-            ],
-            materials : [
-                {
-                    'id': 1,
-                    'url': 'https://www.w3schools.com/tags/att_input_type_radio.asp',
-                    'topic': 'input type'
-                }, 
-                {
-                    'id': 2,
-                    'url': 'https://www.w3schools.com/cssref/css3_pr_mediaquery.asp',
-                    'topic': 'media query'
-                }
-            ]
+            data: '',
+            assignments: []
         }
     }
-    
+
+    componentDidMount() {
+        fetch(`http://localhost:5000/subjects/${this.props.match.params.courseId}`)
+            .then(res => res.json())
+            .then(data => {
+                data.assignmentIds.map(s => {
+                    fetch(`http://localhost:5000/sampleassignments/${s}`)
+                        .then(res => res.json())
+                        .then(assignment => this.setState(prevState => ({
+                            assignments: [...prevState.assignments, assignment]
+                        })))
+                })
+                this.setState({ data })
+
+            })
+    }
+
     render() {
         return (
             <div className="course-container">
                 <div className="course-header">
                     <i class="header-item fas fa-arrow-left"></i>
                     <h3 className="header-item">
-                        Mathematics For Computing
+                        {this.state.data.name}
                     </h3>
                 </div>
                 <div className="course-main">
-                        <div className="row no-gutters">
-                            <div id="left-section" className="col-lg-8 col-12">
-                                <div id="assignment-section">
-                                    <div className="section-header">
-                                        <i class="fas fa-2x fa-book-open"></i>
-                                        <h3>Assignments</h3>
-                                    </div>
+                    <div className="row no-gutters">
+                        <div id="left-section" className="col-lg-8 col-12">
+                            <div id="assignment-section">
+                                <div className="section-header">
+                                    <i class="fas fa-2x fa-book-open"></i>
+                                    <h3>Assignments</h3>
+                                </div>
+                                    
+                                {this.state.assignments && this.state.assignments.length > 0 ?
                                     <div className="row section-body">
                                         {this.state.assignments.map(a => (
                                             <AssignmentDiv  data={a} />
                                         ))}
                                     </div>
-                                </div>
-                                <div id="visualize-section">
-                                    <div>
-                                        <div className="section-header">
-                                            <i class="fas fa-2x fa-poll"></i>
-                                            <h3>Progress</h3>
-                                        </div>
-                                        <LineChart/>
+                                    :
+                                    <ClipLoader></ClipLoader>
+
+                                }        </div>
+                            <div id="visualize-section">
+                                <div>
+                                    <div className="section-header">
+                                        <i class="fas fa-2x fa-poll"></i>
+                                        <h3>Progress</h3>
                                     </div>
+                                    <LineChart />
                                 </div>
                             </div>
-                            <div id="right-section" className="col-lg-4 col-12">
+                        </div>
+                        {/* <div id="right-section" className="col-lg-4 col-12">
                                     <div id="material-section">
                                         <div className="section-header">
                                             <i class="far fa-2x fa-calendar-check"></i>
@@ -84,9 +82,9 @@ export default class Course extends React.Component {
                                             ))}
                                         </div>
                                     </div>
-                            </div>
-                        </div>
-                    
+                            </div> */}
+                    </div>
+
                 </div>
             </div>
         )

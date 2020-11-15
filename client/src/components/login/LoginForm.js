@@ -22,7 +22,7 @@ export default class LoginForm extends React.Component {
 			[name]: value,
 		});
 	}
-
+  
 	handleSubmit(event) {
         event.preventDefault();
 		const requestOptions = {
