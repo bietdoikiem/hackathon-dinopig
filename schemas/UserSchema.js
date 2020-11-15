@@ -16,7 +16,8 @@ const UserSchema = new Schema({
     phone_number: String,
     role: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true,
     },
     subjectIds: {
         type: [String]
@@ -29,6 +30,9 @@ const UserSchema = new Schema({
         required: false,
         default: 'default.jpeg',
     },
+    token: {
+        type: String
+    }
 })
 
 module.exports = mongoose.model('users', UserSchema);
