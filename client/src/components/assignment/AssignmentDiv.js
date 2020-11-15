@@ -4,8 +4,20 @@ import './AssignmentDiv.css'
 export default class AssignmentDiv extends React.Component {
 
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
+            due_date: '',
+            time: '',
+            mark: 0,
+        }
+    }
+
+    componentDidMount() {
+        // fetch(`http://localhost:5000/sampleassignments/${this.props.data}`)
+        //     .then(res => console.log(res))
+        //     .then(data => console.log(data))
     }
 
     render() {
@@ -17,9 +29,9 @@ export default class AssignmentDiv extends React.Component {
                         <h2>{this.props.data.name}</h2>
                     </div>
                     <div class="assignment-info">
-                        <h6>{this.props.data.due}</h6>
-                        <h6>{this.props.data.duration}</h6>
-                        <Link to={`/assignment/${this.props.data.id}`} class="btn">Take Assignment</Link>
+                        <h6>{this.props.data.due_date}</h6>
+                        <h6>{this.props.data.time}</h6>
+                        <Link to={`/user/${this.props.match.params.id}/course/${this.props.match.params.courseId}/assignment/${this.props.data._id}`} class="btn">Take Assignment</Link>
                     </div>
                 </div>
             </div>

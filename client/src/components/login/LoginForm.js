@@ -12,6 +12,7 @@ export default class LoginForm extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(e) {
@@ -40,9 +41,9 @@ export default class LoginForm extends React.Component {
                 password: this.state.password
             })
         }
-        fetch('', requestOptions)
+        fetch('http://localhost:5000/users/auth/login', requestOptions)
             .then(res => res.json())
-            .then(data => this.setState({}))
+            .then(data => console.log(data))
     }
 
     render() {
@@ -53,7 +54,7 @@ export default class LoginForm extends React.Component {
                         <img className='form-logo' src="logo.png" />
                         <input type="text" placeholder="username" name="username" value={this.state.username} onChange={this.handleChange} />
                         <input type="password" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange} />
-                        <button>login</button>
+                        <button onClick={this.handleSubmit} >login</button>
                         <p class="message">Not registered?
                         <NavLink className="navtags" activeClassName="selected-btn" to="/signup"> Sign up </NavLink></p>
                     </form>

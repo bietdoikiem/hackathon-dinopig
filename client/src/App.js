@@ -22,9 +22,9 @@ function App() {
 					<Switch>
 						<Route path="/signin" component={LoginForm}/>
 						<Route path='/signup' component={SignUpForm}/>
-						<Route path='/user' component={StudentHome}/>
-						<Route path='/assignment/:id' component={Assignment}/>
-						<Route path='/course' component={Course}/>
+						<Route exact path='/user/:id' component={StudentHome}/>
+						<Route exact path='/user/:id/course/:courseId/assignment/:assignmentId' component={Assignment}/>
+						<Route exact path='/user/:id/course/:courseId' component={Course}/>
 					</Switch>
 					</div>
 					</div>

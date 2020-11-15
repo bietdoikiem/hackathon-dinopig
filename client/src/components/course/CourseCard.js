@@ -15,7 +15,7 @@ export default class CourseCard extends React.Component {
                         <div class="card-block course-info">
                             {/* Course name */}
                             <div class="card-course-info" id="course-name">
-                                <p>Mathematics For Computing</p>
+                                <p>{this.props.subject_data.name}</p>
                             </div>
 
                             {/* Show how many assignment has been completed */}
@@ -38,7 +38,7 @@ export default class CourseCard extends React.Component {
                             </div>
                         </div>
                         <div class="card-block card-bottom">
-                            <NavLink className="course-btn btn" to='/course'>View</NavLink>
+                            <NavLink className="course-btn" to={`/user/${this.props.data.username}/course/${this.props.subject_data.id}`}>View</NavLink>
                         </div>
                     </div>
                 </div>

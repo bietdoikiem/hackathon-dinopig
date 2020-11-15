@@ -26,7 +26,7 @@ export default class Quiz extends React.Component {
                     <button
                         key={index}
                         name={text}
-                        className={this.props.data.choosed === text ? "answer-btn choosed" : "answer-btn"}
+                        className={this.props.data.userChoice === text ? "answer-btn choosed" : "answer-btn"}
                         onClick={this.handleChooseAnswer}
                         > {text}
                     </button>

@@ -2,6 +2,7 @@ import React from 'react'
 import Quiz from '../../components/assignment/Quiz'
 import styled from 'styled-components'
 import Countdown from 'react-countdown';
+import ClipLoader from 'react-spinners/ClipLoader'
 
 
 const NaviQuiz = styled.button `
@@ -31,24 +32,12 @@ export default class Assignment extends React.Component {
     constructor(props) {
         super(props)
         this.state = { 
-            duration: Date.now() + 5000,
+            duration: 0,
             currentQuiz: 0,
-            quizzes: [
-                {   
-                    id: '1',
-                    question: 'dlakjdljqwjq;eqejq',
-                    choices: ['eqweqeqeqeq', 'Bwqeqeqeqweq', 'Ceqsdadqweqeq', 'Deqdsadqdqdqq'],
-                    studentChoice: ''
-                },
-                {
-                    id: '2',
-                    question: 'Ispum',
-                    choices: ['E', 'F', 'G', 'H'],
-                    studentChoice: ''
-                },
-            ],
+            quizzes: [],
             result : '',
-            asmSampleId: this.props.match.params.id
+            mark : '',
+            asmSampleId: this.props.match.params.assignmentId
         }
         this.handleChoose = this.handleChoose.bind(this)
         this.handleNextQuestion = this.handleNextQuestion.bind(this)
@@ -60,11 +49,11 @@ export default class Assignment extends React.Component {
         this.setState( prevState => ({
             quizzes: prevState.quizzes.map(
                 obj => (obj.id === id ? Object.assign(obj, {
-                    choosed: value
+                    userChoice: value,
+                    sampleId: obj._id
                 }) : obj)
             )
         }))
-        console.log(id)
     }
 
     handleNextQuestion = () => {
@@ -86,6 +75,7 @@ export default class Assignment extends React.Component {
     }
 
     handleSubmit() {
+        console.log(this.state.quizzes)
         const requestOptions = {
             method: 'POST',
 
@@ -95,50 +85,59 @@ export default class Assignment extends React.Component {
                 'Accept': 'application/json'
             },
 
+
             body: JSON.stringify({
-                quizzes: this.state.quizzes
-                
+                quizzes: this.state.quizzes,
+                username: this.props.match.params.id,
+                asmSampleId: this.props.match.params.assignmentId                
             })
         }
-        fetch('https://jsonplaceholder.typicode.com/todos', requestOptions)
-            .then(res => res.json())
-            .then(data => this.setState({
-                result: [
-                    {
-                        id: '1',
-                        result: true,
-                        mark: 50
-                    },
-                    {
-                        id: '2',
-                        result: false,
-                        mark: 0
-                    }
-                ]
-            }))
-            setTimeout(() => {
-                console.log(this.state.result)
 
-            }, 10000);
+        fetch('http://localhost:5000/assignments/submit', requestOptions)
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    result: data.listOfResult,
+                    asm_result: data.asm_result
+                })
+                console.log(data)
+            })
         }
+        
 
       // Submit the assignment if it reach the duration
       autoSubmit() {
-        console.log('submit')
+      }
+
+      componentDidMount() {
+          fetch(`http://localhost:5000/sampleassignments/${this.props.match.params.assignmentId}`)
+            .then(res => res.json())
+            .then(data => {
+                data.sampleQuizIds.map(q => {
+                    fetch(`http://localhost:5000/samplequizzes/${q}`)
+                        .then(res => res.json())
+                        .then(quiz => this.setState(prevState => ({
+                            quizzes: [...prevState.quizzes, quiz]
+                        })))
+                })
+                this.setState({ 
+                    duration: data.time
+                })
+                console.log(this.state.duration)
+            })
       }
 
 
 
     render() {
-        let quizData = this.state.quizzes[this.state.currentQuiz]
-        console.log(this.state.result)
+        let quizData = this.state.quizzes ?  this.state.quizzes[this.state.currentQuiz] : ''
         return (
             
             <div style={{margin: '50px auto'}}>
-                {this.state.result == '' ? 
+            {this.state.quizzes && this.state.quizzes.length > 0 ?
                 <div>
                 <CountDownContainer>
-                    <Countdown onComplete={this.autoSubmit.bind(this)} date={this.state.duration}></Countdown>
+                    <Countdown onComplete={this.autoSubmit.bind(this)} date={this.state.duration.toString()}></Countdown>
                 </CountDownContainer>
                 <Quiz data={quizData} handleChoose={this.handleChoose} />
                 {this.state.currentQuiz > 0 ? 
@@ -152,11 +151,18 @@ export default class Assignment extends React.Component {
                 }
             </div>
                 :
-                <div>
-                    hello
-                </div>
+                <ClipLoader>
+                    
+                </ClipLoader>
                 }
                 
+                {this.state.result && this.state.result.length > 0 ? 
+                    <div>
+                        {this.state.asm_result}
+                    </div>
+                : 
+                    ''
+                }
                 
             </div>
         )
