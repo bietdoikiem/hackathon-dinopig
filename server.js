@@ -13,15 +13,18 @@ var sampleQuizzes = require("./models/SampleQuiz");
 var topics = require("./models/Topic");
 var materials = require("./models/Material");
 var sampleAssignments = require("./models/SampleAssignment");
+const errorHandler = require('./helpers/error-handler');
 const app = express();
 
+var mode = 'development';
 
-
+var setMode = mode == 'production' ? 'mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority' :
+'mongodb://localhost:27017/mydb'
 //Connect to cloud database
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
-	"mongodb+srv://hungthezorba:chelseaprovip123@mindxhackathon.x1ynp.mongodb.net/mindxhackathon?retryWrites=true&w=majority",
+	setMode,
 	{ useNewUrlParser: true, useUnifiedTopology: true}
 )
 .then(res => console.log("Connected to DB"))
@@ -45,6 +48,8 @@ app.get("/", (req, res) => {
         message: "Welcome to DinoPig's API"
     })
 })
+
+app.use(errorHandler);
 
 app.use('/users', users);
 app.use("/subjects", subjects)
