@@ -2,6 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken');
+
+
+const userService = require("../helpers/user.service");
+const authorize = require("../helpers/authorize");
+const role = require('../helpers/role');
+
 
 router.use(bodyParser.json());
 
@@ -13,7 +20,8 @@ router.use(bodyParser.json());
 // .catch(err => console.log(err));
 
 
-var User = require("../schemas/UserSchema");
+const User = require("../schemas/UserSchema");
+const Subject = require("../schemas/SubjectSchema");
 var UserSchema = require("../schemas/UserSchema").schema;
 
 router.get("/", async (req, res) => {
@@ -31,6 +39,7 @@ router.get("/about", (req, res) => {
 router.post("/", async (req, res) => {
 	await User.findOne({ username: req.body.username }, async (err, user) => {
 		if (!user) {
+
 			await User.create({
 				username: req.body.username,
 				name: req.body.name,
@@ -42,6 +51,7 @@ router.post("/", async (req, res) => {
 			res.send({
 				msg: "User created successfully"
 			})
+			
 		} else {
 			res.send({ msg: "username taken" });
 		}
@@ -51,7 +61,6 @@ router.post("/", async (req, res) => {
 router.get("/:username", async(req, res) => {
 	await User.findOne({username: req.params.username}, async (err, user) => {
 		if(err) handleError(err);
-		await user;
 		if(user) {
 			res.send(user)
 		} else {
@@ -61,28 +70,66 @@ router.get("/:username", async(req, res) => {
 		}
 	})
 })
+router.get("/:username/subjects", async(req, res) => {
+	await User.findOne({username: req.params.username}, async(err, user) => {
+		if(err) handleError(err);
+		if(user !== null || user !== undefined) {
+			var listOfSubs = [];
+			const fetchSubIds = await user.subjectIds;
+			await Promise.all(fetchSubIds.map(async (sid) => {
+				await Subject.findOne({_id: sid}, async (err, sub) => {
+					let sub_data = await sub.toJSON();
+					listOfSubs.push(sub_data);
+				})
+				return Promise.resolve(sid);
+			}));
+			console.log(listOfSubs);
+			res.json({
+				listOfSubs: listOfSubs
+			})
+		}
+	})
+})
+
+router.get("/:username/subjects/:idsub/assignments", authorize([role.student]), async(err, user) => {
+
+})
+
+router.put("/add/subject",async(req, res) => {
+	await User.findOne({ username: req.body.username }, async (err, user) => {
+		if (err) handleError(err);
+		try {
+			var user_subIds = user.subjectIds;
+			await user_subIds;
+			user_subIds.push(req.body.subId);
+			if (user) {
+				User.findOneAndUpdate(
+					{ username: req.body.username },
+					{
+						subjectIds: user_subIds,
+					}, (err, result) => {
+						if(err) handleError(err);
+						res.send(result);
+					}
+				);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	});
+})
 
 router.post('/auth/login', async (req, res) => {
     await User.findOne({username: req.body.username}, async (err, user) => {
 		if (err) handleError(err);
-		await user;
         if(user) {
-            if(req.body.password = user.password) {
-                res.json({
-                    'msg': `authenticated as ${user.role}`,
-                })
-            } else {
-				res.json({
-					'msg': `failted to authenticate`
-				})
-			}
-        } else {
-			res.json({
-				'msg': 'wrong username or password'
-			})
-		}
+			userService.authenticate(user, req.body)
+			.then(user => user ? res.json(user) : res.status(400).json({msg: 'Username or password is incorrect'}))
+			.catch(err => next(err));
+        }
     })
 })
+
 
 router.delete('/:username', async (req, res) => {
 	await User.deleteOne({username: req.params.username}, async (err, result) => {
@@ -93,6 +140,25 @@ router.delete('/:username', async (req, res) => {
 
 function handleError(err) {
 	console.log(err);
+}
+
+function verifyToken(req, res, next) {
+	//Get auth header value
+	const bearerHeader = req.headers['authorization'];
+	if(typeof bearerHeader !== 'undefined') {
+		const bearer = bearerHeader.split(' ');
+		const bearerToken = bearer[1];
+		req.token = bearerToken;
+		next(); 
+	} else {
+		res.json({'result': 'not allowed'})
+	}
+}
+
+function authenticate(req, res, next) {
+	userService.authenticate(req.body)
+	.then(user => user ? res.json(user) : res.status(400).json({msg: 'Username or password is incorrect'}))
+	.catch(err => next(err));
 }
 
 module.exports = router;
